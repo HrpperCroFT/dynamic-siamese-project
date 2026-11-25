@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dynamic-siamese"
+version = "0.1.0"
+description = "Dynamic kernel generation for Siamese similarity networks"
+requires-python = ">=3.9"
+dependencies = [
+    "torch>=2.0",
+    "torchvision>=0.15",
+    "numpy",
+]
+
+[project.optional-dependencies]
+train = [
+    "pytorch-metric-learning>=2.0",
+    "tqdm",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]

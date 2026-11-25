@@ -1,0 +1,46 @@
+# Python bytecode and tooling
+__pycache__/
+*.py[cod]
+*.pyd
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments and local configuration
+.venv/
+venv/
+ENV/
+.worktrees/
+.env
+.env.*
+!.env.example
+
+# Build artifacts
+build/
+dist/
+*.whl
+
+# Local datasets, checkpoints, and experiment runtime output
+/data/
+/runs/
+/outputs/
+/results/log_*.txt
+/results/_tmp_*
+/results/smoke_*.csv
+/results/loocv.csv
+/results/loocv_finetune.csv
+/results/indomain_*.csv
+*.pt
+*.pth
+*.ckpt
+*.log
+
+# Editors and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
