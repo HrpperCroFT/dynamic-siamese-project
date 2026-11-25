@@ -2,6 +2,8 @@
 
 Research code for cross-domain few-shot image similarity. A shared image encoder is paired with comparison heads, including reference-conditioned convolution kernels. The experimental protocol and current findings are documented in [`description.md`](description.md) (Russian) and [`description_en.md`](description_en.md) (English).
 
+The run-by-run experiment register is in [`experiments.md`](experiments.md), in English and Russian.
+
 ## Setup (Windows PowerShell)
 
 ```powershell
@@ -49,6 +51,8 @@ The `results/` directory contains the final LOOCV tables described in the experi
 # Проект Dynamic Siamese
 
 Исследовательский код для few-shot сравнения изображений между доменами. Общий энкодер изображений используется вместе с головами сравнения, в том числе с генерацией свёрточных ядер по изображению-референсу. Протокол экспериментов и текущие выводы описаны в [`description.md`](description.md) (русский) и [`description_en.md`](description_en.md) (английский).
+
+Журнал отдельных экспериментов на английском и русском находится в [`experiments.md`](experiments.md).
 
 ## Установка (Windows PowerShell)
 

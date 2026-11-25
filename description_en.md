@@ -130,6 +130,8 @@ The full table is saved in `results/final_relationgcn_full_k10.csv`. It can be r
 
 ## 8. Result files and reproduction
 
+The run-by-run register, including artifacts removed during cleanup and uncertainty about historical sweeps, is maintained in [`experiments.md`](experiments.md).
+
 Final tables and fold-level metrics, including standard deviations, time, and peak memory:
 
 - `results/final_loocv_k5.csv`
