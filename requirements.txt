@@ -1,0 +1,5 @@
+torch>=2.0
+torchvision>=0.15
+numpy
+pytorch-metric-learning>=2.0
+tqdm
