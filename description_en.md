@@ -170,3 +170,29 @@ The tables now agree on fold count, K, query-set size, and number of seeds; Prot
 3. Evaluation uses a fixed subset of 50 target classes per dataset. NABirds therefore uses only part of the available classes.
 4. RelationGCN is our task-adapted architecture, not an exact paper reproduction; results from the earlier implementation must not be directly compared.
 5. Baseline caches contain weights without full provenance. The strictest replication requires retraining the encoders.
+
+## 10. Related works
+
+### Conditional generation of convolutional filters
+
+- **Dynamic Filter Networks** — De Brabandere et al. introduce filters generated dynamically as a function of the input. This is the foundational idea closest to Hyper, where features from a reference image determine convolution kernels for processing the second image: [NeurIPS 2016 paper](https://papers.neurips.cc/paper_files/paper/2016/file/8bf1211fd4b7b94528899de0a43b9fb3-Paper.pdf).
+- **HyperNetworks** — Ha, Dai, and Le describe one neural network generating parameters for another. This is a general source for hypernetworks, not a description of this project's specific architecture: [ICLR 2017 paper](https://openreview.net/pdf?id=rkpACe1lx).
+- **Learning Instance and Task-Aware Dynamic Kernels for Few-Shot Learning** — Ma et al. use generated dynamic kernels in few-shot tasks. It is a close problem-level example, but their model forms instance- and task-aware kernels and differs from the Hyper variant used here: [arXiv:2112.03494](https://arxiv.org/abs/2112.03494).
+
+### Pair comparison and few-shot learning
+
+- **Learning to Compare: Relation Network for Few-Shot Learning** — Sung et al. train a deep function to compare example pairs. This is the source associated with the RelationNet baseline in the experiment tables; it is not an exact source for Hyper or RelationGCN: [CVPR 2018](https://openaccess.thecvf.com/content_cvpr_2018/html/Sung_Learning_to_Compare_CVPR_2018_paper.html).
+- **Prototypical Networks for Few-shot Learning** — Snell, Swersky, and Zemel define the prototype baseline, representing each class by the center of its support examples in feature space: [NeurIPS 2017](https://proceedings.neurips.cc/paper_files/paper/2017/hash/cb8da6767461f2812ae4290eac7cbc42-Abstract.html).
+- **Few-Shot Learning with Graph Neural Networks** — Garcia and Bruna formulate few-shot inference as message passing over a support/query graph. This is relevant graph-based context, although the current RelationGCN adaptation does not build such a graph: [ICLR 2018](https://openreview.net/pdf?id=BJj6qGbRW).
+
+### RelationGCN and adaptation scope
+
+- **Few Shot Object Detection for SAR Images via Feature Enhancement and Dynamic Relationship Modeling** — Chen et al. introduce RelationGCN for few-shot detection in SAR images, combining support attention, support-guided query feature enhancement, and a graph-based relationship module. In this project, RelationGCN names an adaptation of that line of ideas for pairwise similarity on natural images. The current code uses local depthwise kernels and symmetric cosine comparison, rather than Faster R-CNN and the original graph module; it is therefore not a reproduction of the paper: [Remote Sensing, 2022, 14(15), 3669](https://www.mdpi.com/2072-4292/14/15/3669), [DOI: 10.3390/rs14153669](https://doi.org/10.3390/rs14153669).
+- The RelationGCN paper cites **Semi-Supervised Classification with Graph Convolutional Networks** by Kipf and Welling for its base graph operator: [arXiv:1609.02907](https://arxiv.org/abs/1609.02907). That graph operator is not directly implemented in the current depthwise adapter.
+
+### Encoder and datasets
+
+- ResNet18 is based on **Deep Residual Learning for Image Recognition** by He et al., CVPR 2016: [CVF Open Access](https://openaccess.thecvf.com/content_cvpr_2016/html/He_Deep_Residual_Learning_CVPR_2016_paper.html).
+- Datasets: [CUB-200-2011](https://authors.library.caltech.edu/records/cvm3y-5hh21/files/CUB_200_2011.pdf) (Wah et al., 2011); [Stanford Cars](https://www.cs.princeton.edu/~jiadeng/paper/KrauseStarkDengFei-Fei_3DRR13.pdf) (Krause et al., 2013); [Stanford Dogs](https://people.csail.mit.edu/khosla/papers/fgvc2011.pdf) (Khosla et al., 2011); [Oxford Flowers 102](https://www.robots.ox.ac.uk/~vgg/publications/2008/Nilsback08/nilsback08.pdf) (Nilsback & Zisserman, 2008); [NABirds](https://openaccess.thecvf.com/content_cvpr_2015/html/Horn_Building_a_Bird_2015_CVPR_paper.html) (Van Horn et al., CVPR 2015); [FGVC-Aircraft](https://arxiv.org/abs/1306.5151) (Maji et al., 2013).
+
+These citations identify related ideas and the sources of baseline methods. They do not imply that the project variants exactly reproduce the original architectures or protocols.

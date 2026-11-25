@@ -171,3 +171,29 @@ foreach ($K in 5, 10, 15) {
 5. Кэш baseline содержит только веса без полного provenance. Для наиболее строгого воспроизведения нужен повторный запуск с принудительным обучением энкодеров.
 
 В рамках этих ограничений основной эмпирический вывод такой: при данном протоколе Hyper-Sym устойчиво силён и имеет лучшее среднее качество среди сравнённых методов для K=5, 10 и 15; RelationGCN-адаптация — близкий конкурент и лучше на Flowers, но требует больше времени и памяти. Fine-tuning энкодера даёт неодинаковый эффект для разных голов и не улучшает Hyper-Sym в среднем.
+
+## 10. Related works
+
+### Условная генерация свёрточных фильтров
+
+- **Dynamic Filter Networks** — De Brabandere et al. вводят фильтры, генерируемые динамически в зависимости от входа. Это фундаментальная идея, ближайшая к механизму Hyper, где признаки референсного изображения задают свёрточные ядра для обработки второго изображения: [статья NeurIPS 2016](https://papers.neurips.cc/paper_files/paper/2016/file/8bf1211fd4b7b94528899de0a43b9fb3-Paper.pdf).
+- **HyperNetworks** — Ha, Dai и Le описывают нейросеть, которая генерирует параметры другой нейросети. Это общий источник для гиперсетей, а не описание конкретной архитектуры проекта: [статья ICLR 2017](https://openreview.net/pdf?id=rkpACe1lx).
+- **Learning Instance and Task-Aware Dynamic Kernels for Few-Shot Learning** — Ma et al. применяют генерируемые динамические ядра в few-shot задачах. Это близкий по постановке пример, но их модель формирует instance- и task-aware ядра и отличается от используемого здесь Hyper: [arXiv:2112.03494](https://arxiv.org/abs/2112.03494).
+
+### Сравнение пар и few-shot обучение
+
+- **Learning to Compare: Relation Network for Few-Shot Learning** — Sung et al. обучают глубокую функцию сравнения пары примеров. Эта работа относится к baseline RelationNet в экспериментальных таблицах; она не является точным источником Hyper или RelationGCN: [CVPR 2018](https://openaccess.thecvf.com/content_cvpr_2018/html/Sung_Learning_to_Compare_CVPR_2018_paper.html).
+- **Prototypical Networks for Few-shot Learning** — Snell, Swersky и Zemel задают прототипный baseline, который вычисляет представление класса как центр support-примеров в пространстве признаков: [NeurIPS 2017](https://proceedings.neurips.cc/paper_files/paper/2017/hash/cb8da6767461f2812ae4290eac7cbc42-Abstract.html).
+- **Few-Shot Learning with Graph Neural Networks** — Garcia и Bruna рассматривают few-shot inference как передачу сообщений по графу support/query. Это релевантный графовый контекст, но текущая RelationGCN-адаптация не строит такой граф: [ICLR 2018](https://openreview.net/pdf?id=BJj6qGbRW).
+
+### RelationGCN и границы адаптации
+
+- **Few Shot Object Detection for SAR Images via Feature Enhancement and Dynamic Relationship Modeling** — Chen et al. описывают RelationGCN для few-shot обнаружения объектов в SAR-изображениях: attention для support, support-guided усиление query-признаков и графовую модель отношений. В этом проекте название RelationGCN относится к адаптации той линии идей под попарное сравнение обычных изображений. Текущий код использует локальные depthwise-ядра и симметричное cosine-сравнение, не Faster R-CNN и не исходный графовый модуль; поэтому это не reproduction статьи: [Remote Sensing, 2022, 14(15), 3669](https://www.mdpi.com/2072-4292/14/15/3669), [DOI: 10.3390/rs14153669](https://doi.org/10.3390/rs14153669).
+- Для базового графового оператора статья RelationGCN ссылается на **Semi-Supervised Classification with Graph Convolutional Networks** — Kipf и Welling: [arXiv:1609.02907](https://arxiv.org/abs/1609.02907). Графовый оператор из этой работы в текущем depthwise-адаптере напрямую не реализован.
+
+### Энкодер и датасеты
+
+- ResNet18 основан на работе **Deep Residual Learning for Image Recognition** — He et al., CVPR 2016: [CVF Open Access](https://openaccess.thecvf.com/content_cvpr_2016/html/He_Deep_Residual_Learning_CVPR_2016_paper.html).
+- Датасеты: [CUB-200-2011](https://authors.library.caltech.edu/records/cvm3y-5hh21/files/CUB_200_2011.pdf) (Wah et al., 2011); [Stanford Cars](https://www.cs.princeton.edu/~jiadeng/paper/KrauseStarkDengFei-Fei_3DRR13.pdf) (Krause et al., 2013); [Stanford Dogs](https://people.csail.mit.edu/khosla/papers/fgvc2011.pdf) (Khosla et al., 2011); [Oxford Flowers 102](https://www.robots.ox.ac.uk/~vgg/publications/2008/Nilsback08/nilsback08.pdf) (Nilsback & Zisserman, 2008); [NABirds](https://openaccess.thecvf.com/content_cvpr_2015/html/Horn_Building_a_Bird_2015_CVPR_paper.html) (Van Horn et al., CVPR 2015); [FGVC-Aircraft](https://arxiv.org/abs/1306.5151) (Maji et al., 2013).
+
+Связь с этими статьями указывает на научные идеи и источники baseline-методов. Она не означает, что приведённые в проекте варианты являются точными воспроизведениями оригинальных архитектур или протоколов.
